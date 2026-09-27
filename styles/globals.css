@@ -1,0 +1,13 @@
+/*
+ * Feuille de style du module, déclarée dans `module.json`.
+ *
+ * Les jetons sont préfixés `--fqec-` et non `--fq-` : fq-card-engine occupe
+ * déjà `--fq-*` sur `:root`, et les deux modules peuvent être actifs dans le
+ * même monde — un nom partagé y ferait gagner le dernier chargé.
+ */
+:root {
+    /* Orange d'avertissement, aligné sur fq-card-engine (#E36934). */
+    --fqec-warning: #e36934;
+    /* Rouge d'erreur, aligné sur fq-card-engine (#C04200). */
+    --fqec-error: #c04200;
+}

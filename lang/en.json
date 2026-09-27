@@ -1,0 +1,5 @@
+{
+  "FQCOMBAT.ModuleTitle": "FQ Enhanced Combat",
+  "FQCOMBAT.DebugSetting": "Debug logs",
+  "FQCOMBAT.DebugSettingHint": "Writes the module's debug messages to the browser console. Off by default."
+}

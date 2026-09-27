@@ -1,0 +1,28 @@
+{
+  "name": "fq-enhanced-combat",
+  "version": "3.0.0",
+  "description": "Generic dnd5e combat enhancements for Foundry VTT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LyrkhanJenkins/fq-enhanced-combat.git"
+  },
+  "homepage": "https://github.com/LyrkhanJenkins/fq-enhanced-combat#readme",
+  "bugs": {
+    "url": "https://github.com/LyrkhanJenkins/fq-enhanced-combat/issues"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src ./tests",
+    "lint:fix": "eslint src ./tests --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@vitest/coverage-v8": "4.1.10",
+    "eslint": "9.39.5",
+    "jsdom": "29.1.1",
+    "vitest": "4.1.10"
+  }
+}

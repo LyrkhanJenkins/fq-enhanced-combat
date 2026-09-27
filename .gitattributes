@@ -1,0 +1,15 @@
+# Fins de ligne : dépôt ET copie de travail en LF.
+#
+# Sans cette règle, core.autocrlf restitue du CRLF au checkout et le moindre
+# outil qui réécrit un fichier entier rejoue une différence de fins de ligne
+# sur tout le fichier.
+* text=auto eol=lf
+
+# Bases LevelDB des mondes de test et médias : aucune conversion.
+tests/script/*/data/** -text
+*.png binary
+*.PNG binary
+*.webp binary
+*.webm binary
+*.mp3 binary
+*.m4a binary

@@ -1,0 +1,64 @@
+{
+  "id": "fq-enhanced-combat",
+  "title": "FQ Enhanced Combat",
+  "description": "Generic combat enhancements for the dnd5e system. Hosts the combat features of the FQ Card Engine that do not belong to the Final Quest card battle system, so they can be used without it.",
+  "version": "3.0.0",
+  "license": "MIT",
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json",
+      "flags": {}
+    }
+  ],
+  "authors": [
+    {
+      "name": "Lyrkhan",
+      "email": "lyrkhanjenkins@gmail.com",
+      "url": "https://github.com/LyrkhanJenkins",
+      "discord": "lyrkhanjenkins",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "src/init-enhanced-combat.js",
+    "src/hook/init.hook.js",
+    "src/hook/setup.hook.js"
+  ],
+  "styles": [
+    "styles/globals.css"
+  ],
+  "socket": false,
+  "url": "https://github.com/LyrkhanJenkins/fq-enhanced-combat",
+  "readme": "https://github.com/LyrkhanJenkins/fq-enhanced-combat#readme",
+  "bugs": "https://github.com/LyrkhanJenkins/fq-enhanced-combat/issues",
+  "changelog": "https://github.com/LyrkhanJenkins/fq-enhanced-combat/blob/main/RELEASE.md",
+  "manifest": "https://github.com/LyrkhanJenkins/fq-enhanced-combat/releases/latest/download/module.json",
+  "download": "https://github.com/LyrkhanJenkins/fq-enhanced-combat/releases/latest/download/fq-enhanced-combat.zip",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.368"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "6.0.0",
+          "verified": "6.0.3",
+          "maximum": "6.9.99"
+        }
+      }
+    ],
+    "requires": []
+  },
+  "flags": {}
+}

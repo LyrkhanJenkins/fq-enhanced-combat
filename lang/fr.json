@@ -1,0 +1,5 @@
+{
+  "FQCOMBAT.ModuleTitle": "FQ Enhanced Combat",
+  "FQCOMBAT.DebugSetting": "Journaux de débogage",
+  "FQCOMBAT.DebugSettingHint": "Écrit les messages de débogage du module dans la console du navigateur. Désactivé par défaut."
+}

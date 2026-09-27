@@ -1,0 +1,21 @@
+Credits
+=======
+
+FQ Enhanced Combat
+------------------
+
+Design and code: lyrkhan.
+
+The combat features gathered here come from the FQ Card Engine
+(https://gitlab.com/final-quest/fq-card-engine), where they were written for
+Final Quest 8. Only what is generic to the dnd5e system moves here; the Final
+Quest card battle system, its cards and its illustrations stay there.
+
+
+Systems and modules
+-------------------
+
+  - Foundry VTT dnd5e system
+  - D&D 5th edition SRD 5.1, used under CC BY 4.0
+
+No third-party module asset is redistributed in this package.
