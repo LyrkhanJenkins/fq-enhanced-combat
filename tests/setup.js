@@ -47,6 +47,13 @@ beforeEach(() => {
         },
     };
 
+    // `ChatMessage.create` est le point de sortie de `core/utils/chat.utils.js` :
+    // tout message publie par une fonctionnalite passe par la.
+    globalThis.ChatMessage = {
+        create: vi.fn(),
+        getSpeaker: vi.fn(({actor} = {}) => ({actor: actor?.id ?? null}))
+    };
+
     globalThis.game = {
         i18n: {
             localize: vi.fn(str => str),

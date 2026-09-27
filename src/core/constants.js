@@ -17,3 +17,19 @@ export const MODULE_ID = "fq-enhanced-combat";
  * @type {string}
  */
 export const I18N = "FQCOMBAT";
+
+/**
+ * Couleur des avertissements publiés dans le chat. Reprise telle quelle de
+ * fq-card-engine : les deux modules parlent dans le même chat, un ton différent
+ * pour un même niveau de message se remarquerait.
+ *
+ * @type {string}
+ */
+export const WARNING_COLOR = "#E36934";
+
+/**
+ * Couleur d'un échec — un jet de sauvegarde contre la mort raté, notamment.
+ *
+ * @type {string}
+ */
+export const FAIL_COLOR = "red";
