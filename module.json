@@ -31,7 +31,8 @@
     "src/init-enhanced-combat.js",
     "src/hook/init.hook.js",
     "src/hook/setup.hook.js",
-    "src/hook/combat.hook.js"
+    "src/hook/combat.hook.js",
+    "src/hook/combat-tracker.hook.js"
   ],
   "styles": [
     "styles/globals.css"

@@ -3,24 +3,44 @@
 Fonctionnalités prévues, avec ce que leur extraction depuis `fq-card-engine` a
 déjà appris. Les mesures datent du 27/09/2026 et portent sur fq-card-engine 3.0.0.
 
-## Timer de tour
+## Timer de tour — FAIT le 29/09/2026
 
-Nouvelle fonctionnalité, à écrire ici — rien à extraire.
+Écrit ici, rien à extraire. `src/domain/turn-timer.js` pour la règle,
+`src/ui/turn-timer-tracker.js` pour le bandeau, `src/hook/combat-tracker.hook.js`
+pour l'affichage.
 
-Un compte à rebours pendant le tour du combattant actif, pour les tables qui
-veulent tenir le rythme. Points à trancher avant de commencer :
+Ce qui a été tranché :
 
-- **À l'expiration** : notifier seulement, ou passer la main au combattant
-  suivant ? Un passage automatique est plus efficace mais peut couper un joueur
-  au milieu d'une action.
-- **Portée de l'affichage** : visible par tous, ou seulement par le joueur dont
-  c'est le tour ?
-- **Mise en pause** : suivre la pause de Foundry (`game.paused`) semble
-  nécessaire, sinon le chronomètre tourne pendant une interruption de séance.
-- **Durée** : un réglage de monde, en secondes.
+- **À l'expiration** : la main passe au combattant suivant, avec un message de
+  chat qui laisse la trace du tour perdu.
+- **Portée** : les tours des combattants appartenant à un joueur
+  (`actor.hasPlayerOwner`) seulement — le MJ mène ses créatures à son rythme.
+  Un combattant à terre est exclu quand les jets de mort sont actifs : ils
+  tiennent déjà son tour et passent la main en deux secondes.
+- **Affichage** : un bandeau au-dessus de la liste du combat tracker, chez tout
+  le monde, avec le temps en `m:ss` et une barre qui se vide.
+- **Mise en pause** : suit `game.paused` par le hook `pauseGame`.
+- **Durée** : réglage de monde, curseur de 10 à 300 secondes, 60 par défaut. Une
+  nouvelle durée vaut pour le tour en cours, pas seulement pour le suivant.
 
-Le hook `combatTurnChange` est déjà utilisé par les jets de mort
-(`../src/hook/combat.hook.js`) : c'est là que le timer se remettra à zéro.
+Deux choix d'architecture qui ont demandé réflexion, et qu'il ne faut pas
+défaire :
+
+1. **L'échéance est partagée, pas le décompte.** Le premier MJ actif inscrit
+   l'instant de fin du tour dans un drapeau du combat
+   (`flags.fq-enhanced-combat.turnTimer`) ; chaque client en déduit le temps
+   restant. Un décompte local par client aurait dérivé d'un poste à l'autre, et
+   un joueur qui recharge sa page en milieu de tour serait reparti d'un tour plein.
+2. **L'instant de référence est `game.time.serverTime`, pas `Date.now()`.** Les
+   horloges des postes d'une table ne sont pas à la même heure : une échéance
+   absolue lue sur l'horloge locale s'afficherait n'importe comment.
+
+La pause oblige à deux états dans le drapeau : une échéance (`expiresAt`) quand
+le temps court, un reste figé (`remaining`) quand il est gelé. C'est ce qui
+permet à la reprise de rendre au joueur exactement le temps qu'il lui restait.
+
+Reste ouvert, si le besoin s'en fait sentir : un réglage « notifier seulement »
+au lieu de passer la main, et un bandeau réservé au joueur dont c'est le tour.
 
 ## Attaques d'opportunité
 

@@ -1,18 +1,24 @@
 import DeathSave from "../domain/death-save.js";
+import TurnTimer from "../domain/turn-timer.js";
 import {isLocalUserFirstActiveGM} from "../core/utils/gm.utils.js";
 import {MODULE_ID} from "../core/constants.js";
 
 /**
- * Les deux automatismes de combat du module.
+ * Les automatismes de combat du module.
  *
- * Deux gardes valent pour les deux :
+ * Deux gardes valent pour tous :
  *
  * 1. Ils ne s'exécutent que sur le client du PREMIER MJ ACTIF, car ils modifient
  *    des documents partagés (jet de sauvegarde, initiative de tous les
- *    combattants) : sans cela chaque client connecté rejouerait l'opération.
- * 2. Ils sont désormais les SEULS à porter ces deux règles : fq-card-engine les a
+ *    combattants, échéance du tour) : sans cela chaque client connecté rejouerait
+ *    l'opération.
+ * 2. Ils sont désormais les SEULS à porter ces règles : fq-card-engine les a
  *    cédées et se contente d'interroger l'API publique pour savoir si un début de
  *    tour lui échappe.
+ *
+ * Le garde du compte à rebours est porté par `TurnTimer.rearmForGM` plutôt qu'ici :
+ * il n'a à être consulté que lorsqu'il y a un drapeau à écrire, sans quoi un monde
+ * sans chronomètre et sans MJ connecté verrait un avertissement à chaque tour.
  */
 
 /**
@@ -33,6 +39,38 @@ Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
         return;
     }
     await DeathSave.resolveTurnStart(combat);
+});
+
+/**
+ * Compte à rebours du tour remis à zéro à chaque changement de tour : une échéance
+ * pour le tour d'un joueur, rien pour celui d'une créature du MJ.
+ *
+ * Handler distinct de celui des jets de mort, et non une suite de celui-ci : le
+ * retour en arrière dans l'ordre du combat, qui ne doit surtout pas faire relancer
+ * un jet de sauvegarde, doit bel et bien REPARTIR le chronomètre — le combattant
+ * sur lequel le MJ revient reprend son tour du début.
+ *
+ * Un tour à terre n'est pas chronométré, `TurnTimer.watchesTurnOf` le refuse :
+ * les jets de mort tiennent déjà ce tour et passent la main en deux secondes.
+ */
+Hooks.on("combatTurnChange", async function (combat, _prior, _current) {
+    await TurnTimer.rearmForGM(combat);
+});
+
+/**
+ * La pause de Foundry gèle le compte à rebours, la reprise le relance : sans cela
+ * une interruption de séance mangerait le tour du joueur.
+ */
+Hooks.on("pauseGame", async function (paused) {
+    await TurnTimer.syncPauseForGM(paused);
+});
+
+/**
+ * Fin du combat : le compte à rebours local du MJ est désarmé. Le drapeau qui
+ * portait l'échéance part avec le combat supprimé.
+ */
+Hooks.on("deleteCombat", function (_combat, _options, _userId) {
+    TurnTimer.cancel();
 });
 
 /**

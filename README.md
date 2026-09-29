@@ -7,9 +7,10 @@ This module is the home of the combat features that grew inside the
 dnd5e rather than to Final Quest. Moved here, they can be used at any dnd5e
 table, without the Final Quest card battle system.
 
-> **Status: initialised, empty.** The module installs, enables and loads, but
-> ships no feature yet. Features are extracted from the FQ Card Engine one at a
-> time — see [RELEASE.md](RELEASE.md) for what each version adds.
+> **Status: three features, all off by default.** Death saving throws and
+> automatic initiative came over from the FQ Card Engine; the turn timer was
+> written here. Features land one at a time — see [RELEASE.md](RELEASE.md) for
+> what each version adds.
 
 ## Requirements
 
@@ -29,9 +30,21 @@ https://github.com/LyrkhanJenkins/fq-enhanced-combat/releases/latest/download/mo
 
 ## Settings
 
+All rule settings are world settings and all are off by default: each one
+changes how a fight is run, so it has to be the GM's explicit choice.
+
 | Setting | Scope | Default | Effect |
 | --- | --- | --- | --- |
+| Death saving throws | world | off | A character at 0 hit points rolls their death save at the start of their turn; a minion vanishes, an NPC leaves the fight. |
+| Roll Initiative | world | off | Rolls initiative for every combatant that still lacks it when one joins the fight. |
+| Turn timer | world | off | Counts down the turn of every combatant owned by a player and hands over to the next combatant when the time runs out. |
+| Turn duration (seconds) | world | 60 | How long a player's turn lasts. A new duration applies to the turn under way. |
 | Debug logs | client | off | Writes the module's debug messages to the browser console. |
+
+The turn timer shows its countdown in the combat tracker, the same for everyone:
+the first active GM writes the turn's deadline to a combat flag, and every client
+reads it — so a player who reloads mid-turn sees the real time left, not a fresh
+turn. Foundry's pause freezes it.
 
 ## For other modules
 
@@ -43,7 +56,10 @@ game.modules.get("fq-enhanced-combat").api   // per-feature entry points
 FqEnhancedCombatModule.moduleName            // "fq-enhanced-combat"
 ```
 
-Both are deliberately bare while the module is empty.
+The façade carries the module's identity; `api` carries one entry per feature —
+`deathSave.skipsTurn(actor)` tells whether a turn start is handled here, and
+`turnTimer.remainingMs()` gives the time left on the current turn, or `null` when
+it is not timed.
 
 ## Development
 
@@ -58,6 +74,8 @@ npm test
   hooks then read).
   - `src/config/` — `game.settings` registrations.
   - `src/core/` — layer without any dependency on the rest of the module.
+  - `src/domain/` — one file per feature, holding the rule and nothing else.
+  - `src/ui/` — what the features add to Foundry's own windows.
   - `src/hook/` — one file per Foundry hook.
 - `lang/` — `en.json` and `fr.json`, keys prefixed `FQCOMBAT.`.
 - `tests/` — Vitest, with the Foundry globals mocked in `tests/setup.js`.

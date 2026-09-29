@@ -10,4 +10,75 @@
     --fqec-warning: #e36934;
     /* Rouge d'erreur, aligné sur fq-card-engine (#C04200). */
     --fqec-error: #c04200;
+    /* Vert du compte à rebours de tour, sobre : il occupe le tracker en continu. */
+    --fqec-timer: #4f8a3f;
+}
+
+/*
+ * Bandeau du compte à rebours de tour, posé par `src/ui/turn-timer-tracker.js`
+ * juste au-dessus de la liste des combattants.
+ *
+ * Les couleurs de bordure et de fond passent par les jetons de Foundry, avec un
+ * repli : le tracker est habillé par le thème du monde, un bandeau aux couleurs
+ * fixes y ferait tache dès le premier thème sombre.
+ */
+.fqec-turn-timer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 3px 8px;
+    margin: 4px 6px;
+    padding: 4px 8px;
+    border: 1px solid var(--color-border-light-tertiary, rgb(0 0 0 / 30%));
+    border-radius: 4px;
+    background: var(--color-bg-option, rgb(0 0 0 / 10%));
+    font-size: var(--font-size-12, 12px);
+    line-height: 1.3;
+}
+
+.fqec-turn-timer-label {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.75;
+}
+
+.fqec-turn-timer-value {
+    /* Chiffres à largeur fixe : sans eux le décompte tremble à chaque seconde. */
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+.fqec-turn-timer-track {
+    grid-column: 1 / -1;
+    overflow: hidden;
+    height: 3px;
+    border-radius: 2px;
+    background: rgb(0 0 0 / 35%);
+}
+
+.fqec-turn-timer-bar {
+    width: 100%;
+    height: 100%;
+    background: var(--fqec-timer);
+    /* Le bandeau n'est repeint qu'une fois par seconde : la transition fait
+       glisser la barre entre deux battements au lieu de la faire sauter. */
+    transition: width 1s linear;
+}
+
+.fqec-turn-timer.is-urgent .fqec-turn-timer-bar {
+    background: var(--fqec-error);
+}
+
+.fqec-turn-timer.is-urgent .fqec-turn-timer-value {
+    color: var(--fqec-warning);
+}
+
+/* Chronomètre gelé par la pause de Foundry : en retrait, et sans glissement —
+   une barre qui continue d'avancer en pause dirait le contraire de la vérité. */
+.fqec-turn-timer.is-paused {
+    opacity: 0.6;
+}
+
+.fqec-turn-timer.is-paused .fqec-turn-timer-bar {
+    transition: none;
 }

@@ -1,6 +1,7 @@
 import {MODULE_ID} from "../core/constants.js";
 import {info} from "../core/utils/log.utils.js";
 import DeathSave from "../domain/death-save.js";
+import TurnTimer from "../domain/turn-timer.js";
 
 Hooks.once("setup", function () {
     // Les réglages sont relevés une fois, ici : `init` enregistre, `setup` lit.
@@ -21,6 +22,17 @@ Hooks.once("setup", function () {
             deathSave: {
                 isEnabled: () => DeathSave.isEnabled(),
                 skipsTurn: actor => DeathSave.skipsTurn(actor)
+            },
+
+            /**
+             * Compte à rebours du tour. `remainingMs` rend le temps qu'il reste au
+             * combattant courant, ou `null` si son tour n'est pas chronométré :
+             * lisible par tous les clients, l'échéance étant partagée par un
+             * drapeau du combat.
+             */
+            turnTimer: {
+                isEnabled: () => TurnTimer.isEnabled(),
+                remainingMs: (combat = game.combat) => TurnTimer.remainingMs(combat)
             }
         };
     }

@@ -11,5 +11,12 @@
   "FQCOMBAT.NpcOutOfCombat": "{name} s'effondre et quitte le combat",
   "FQCOMBAT.GMMustBeConnected": "Un MJ doit être connecté pour le module FQCardEngine",
   "FQCOMBAT.RollInitiativeSetting": "Lancer l'initiative",
-  "FQCOMBAT.RollInitiativeSettingHint": "Lance les dés d'initiative en mode normal au début des combats et sur les cartes invoquant des familiers"
+  "FQCOMBAT.RollInitiativeSettingHint": "Lance les dés d'initiative en mode normal au début des combats et sur les cartes invoquant des familiers",
+  "FQCOMBAT.TurnTimerSetting": "Timer de tour",
+  "FQCOMBAT.TurnTimerSettingHint": "Décompte le tour de chaque combattant appartenant à un joueur, et passe la main au combattant suivant à l'expiration. Le décompte s'affiche dans le combat tracker, le même pour tous, et la pause de Foundry le gèle. Les tours menés par le MJ ne sont pas chronométrés, non plus que celui d'un combattant à 0 point de vie. Désactivé par défaut.",
+  "FQCOMBAT.TurnTimerDurationSetting": "Durée d'un tour (secondes)",
+  "FQCOMBAT.TurnTimerDurationSettingHint": "Le temps dont dispose un joueur avant que le timer ne passe la main au combattant suivant. Une nouvelle durée vaut pour le tour en cours, et pas seulement pour le suivant.",
+  "FQCOMBAT.TurnTimerLabel": "Temps restant",
+  "FQCOMBAT.TurnTimerPaused": "Temps restant (en pause)",
+  "FQCOMBAT.TurnTimerExpired": "{name} a épuisé son temps : la main passe"
 }

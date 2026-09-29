@@ -11,5 +11,12 @@
   "FQCOMBAT.NpcOutOfCombat": "{name} collapses and leaves the fight",
   "FQCOMBAT.GMMustBeConnected": "GM Must Be Connected for FQCardEngine module",
   "FQCOMBAT.RollInitiativeSetting": "Roll Initiative",
-  "FQCOMBAT.RollInitiativeSettingHint": "Roll Normal Initiative In start combat and cards creating minions"
+  "FQCOMBAT.RollInitiativeSettingHint": "Roll Normal Initiative In start combat and cards creating minions",
+  "FQCOMBAT.TurnTimerSetting": "Turn timer",
+  "FQCOMBAT.TurnTimerSettingHint": "Counts down the turn of every combatant owned by a player, and hands over to the next combatant when the time runs out. The countdown is shown in the combat tracker, the same for everyone, and Foundry's pause freezes it. Turns led by the GM are not timed, and neither is the turn of a combatant at 0 hit points. Off by default.",
+  "FQCOMBAT.TurnTimerDurationSetting": "Turn duration (seconds)",
+  "FQCOMBAT.TurnTimerDurationSettingHint": "How long a player's turn lasts before the timer hands over to the next combatant. A new duration applies to the turn under way, not just the next one.",
+  "FQCOMBAT.TurnTimerLabel": "Time left",
+  "FQCOMBAT.TurnTimerPaused": "Time left (paused)",
+  "FQCOMBAT.TurnTimerExpired": "{name} runs out of time: turn handed over"
 }
