@@ -1,5 +1,14 @@
 name: Release
 
+# Le declencheur `release: published` est INDISPENSABLE : pour un evenement
+# `release`, GitHub prend le workflow sur la BRANCHE PAR DEFAUT, pas sur le tag.
+# C'est donc la seule voie pour republier un vieux tag, dont le commit ne contient
+# pas ce fichier — et c'est ce qui se passe quand on cree une release a la main
+# dans l'interface GitHub.
+#
+# Le `concurrency` plus bas absorbe les declenchements en double, quelle qu'en soit
+# la cause : le 29/09/2026, un seul push du tag 3.0.0 a produit deux runs, tous
+# deux de type `push`. Retirer un declencheur n'y changeait rien.
 on:
   push:
     tags:
@@ -23,6 +32,10 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: release-${{ inputs.tag || github.event.release.tag_name || github.ref }}
+  cancel-in-progress: true
 
 env:
   MODULE_ID: fq-enhanced-combat
@@ -82,7 +95,16 @@ jobs:
           mkdir -p dist/package
 
           # On n'embarque que ce qui est utile au runtime Foundry.
-          cp -r src styles lang LICENSE CREDITS README.md dist/package/
+          # Chaque entree n'est copiee QUE SI ELLE EXISTE : un tag ancien ne porte
+          # pas forcement tout (CREDITS, styles/...), et une copie rigide ferait
+          # echouer la retro-publication.
+          for item in src styles lang LICENSE CREDITS README.md; do
+            if [ -e "$item" ]; then
+              cp -r "$item" dist/package/
+            else
+              echo "::notice::absent de ce tag, non embarque : $item"
+            fi
+          done
 
           # Le manifest pointe sur "latest" (Foundry y detecte les mises a jour),
           # le download est epingle sur ce tag (installation d'une version precise).
