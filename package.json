@@ -5,11 +5,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LyrkhanJenkins/fq-enhanced-combat.git"
+    "url": "git+https://github.com/final-quest/fq-enhanced-combat.git"
   },
-  "homepage": "https://github.com/LyrkhanJenkins/fq-enhanced-combat#readme",
+  "homepage": "https://github.com/final-quest/fq-enhanced-combat#readme",
   "bugs": {
-    "url": "https://github.com/LyrkhanJenkins/fq-enhanced-combat/issues"
+    "url": "https://github.com/final-quest/fq-enhanced-combat/issues"
   },
   "scripts": {
     "test": "vitest run",

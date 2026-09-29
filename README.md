@@ -3,7 +3,7 @@
 Generic combat enhancements for the **dnd5e** system.
 
 This module is the home of the combat features that grew inside the
-[FQ Card Engine](https://github.com/LyrkhanJenkins/fq-card-engine) but belong to
+[FQ Card Engine](https://github.com/final-quest/fq-card-engine) but belong to
 dnd5e rather than to Final Quest. Moved here, they can be used at any dnd5e
 table, without the Final Quest card battle system.
 
@@ -25,7 +25,7 @@ needs in `module.json` when it lands.
 Paste this manifest URL in Foundry's *Install Module* dialog:
 
 ```
-https://github.com/LyrkhanJenkins/fq-enhanced-combat/releases/latest/download/module.json
+https://github.com/final-quest/fq-enhanced-combat/releases/latest/download/module.json
 ```
 
 ## Settings
