@@ -87,7 +87,7 @@ banned.
 
 Releases are cut by tagging: the GitHub workflow refuses a tag that does not
 match the `version` in `module.json`, and takes the release notes from the
-matching `## v<version>` section of [RELEASE.md](RELEASE.md).
+matching `Update <version>:` block of [RELEASE.md](RELEASE.md).
 
 ## License
 

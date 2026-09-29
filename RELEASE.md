@@ -1,59 +1,20 @@
-# Release Notes
-
-## v3.0.0
-
-Premier module : l'ossature, deux fonctionnalités reprises de fq-card-engine et
-une écrite ici. Les trois sont désactivées par défaut.
-
-FQ Enhanced Combat est l'hôte des fonctionnalités de combat de fq-card-engine qui
-relèvent de dnd5e plutôt que de Final Quest — extraites une à une, pour être
-utilisables sans le système de cartes.
-
-Le numéro de version suit celui de fq-card-engine et de fq-restrain-movement :
-les trois modules sont publiés ensemble.
-
-### Timer de tour
-
-Écrit ici, rien à extraire : un compte à rebours sur le tour des combattants
-appartenant à un joueur, qui passe la main au combattant suivant à l'expiration.
-
-- Bandeau dans le combat tracker : le temps restant en `m:ss`, une barre qui se
-  vide, une alerte dans les cinq dernières secondes.
-- **Le même décompte pour tous.** Le premier MJ actif inscrit l'échéance du tour
-  dans un drapeau du combat et chaque client en déduit le temps restant, à partir
-  de l'heure du serveur (`game.time.serverTime`) et non de l'horloge locale. Un
-  joueur qui recharge sa page en milieu de tour voit le temps qu'il lui reste
-  vraiment.
-- La pause de Foundry gèle le compte à rebours et la reprise rend au joueur
-  exactement le temps qu'il lui restait : une interruption de séance ne mange
-  plus un tour.
-- Les tours menés par le MJ ne sont pas chronométrés, non plus que celui d'un
-  combattant à 0 point de vie quand les jets de mort le prennent déjà en charge.
-- Deux réglages de monde : l'activation, et la durée d'un tour (curseur de 10 à
-  300 secondes, 60 par défaut). Un changement vaut pour le tour en cours.
-
-### Jets de sauvegarde contre la mort
-
-Au début du tour d'un combattant à 0 point de vie : jet de sauvegarde pour un
-personnage (trois réussites le remettent à 1 point de vie, trois échecs le tuent),
-dissipation pour un sbire, sortie de combat pour un PNJ.
-
-### Initiative lancée d'office
-
-À l'entrée en combat, l'initiative est lancée pour tous les combattants qui n'en
-ont pas encore.
-
-### Ossature
-
-- Manifeste `module.json` : dnd5e 6.x, Foundry 14, aucune dépendance de module,
-  socket désactivé — chaque extraction ajoutera ce dont elle a besoin.
-- Chaîne de chargement `src/init-enhanced-combat.js` (façade
-  `window.FqEnhancedCombatModule` et espace `CONFIG.FqEnhancedCombat`) puis les
-  hooks `init` et `setup`.
-- Réglage « Journaux de débogage », traduit en anglais et en français.
-- Interface publique `game.modules.get("fq-enhanced-combat").api` : le point
-  d'entrée par lequel fq-card-engine interroge ce module (`deathSave.skipsTurn`
-  pour savoir si un début de tour lui échappe, `turnTimer.remainingMs` pour le
-  temps restant au tour courant).
-- Outillage reprenant celui de fq-card-engine : ESLint (mêmes règles), Vitest,
-  et une CI GitHub (lint + tests, release sur tag).
+Update 3.0.0:
+    Feat:
+        - Turn timer on the turn of combatants owned by a player, passing the hand to the next combatant when it expires
+        - Banner in the combat tracker: the remaining time in m:ss, a bar that empties, an alert in the last five seconds
+        - The same countdown for everyone: the first active GM writes the turn deadline in a combat flag, and each client derives the remaining time from the server clock (game.time.serverTime) instead of its own
+        - A player reloading their page mid-turn sees the time they really have left
+        - Foundry's pause freezes the countdown, and resuming gives the player back exactly the time they had left
+        - GM-led turns are not timed, and neither is the turn of a combatant at 0 hit points when death saving throws already handle it
+        - Two world settings for the timer: activation, and the duration of a turn (slider from 10 to 300 seconds, 60 by default), a change applying to the current turn
+        - Death saving throws at the start of the turn of a combatant at 0 hit points: a saving throw for a character (three successes bring them back to 1 hit point, three failures kill them), dispel for a minion, exit from combat for an NPC
+        - Initiative rolled on joining combat, for every combatant that does not have one yet
+        - Public API game.modules.get("fq-enhanced-combat").api, the entry point through which FQ Card Engine queries this module (deathSave.skipsTurn to know whether a turn start escapes it, turnTimer.remainingMs for the time left on the current turn)
+    Chore:
+        - First release: the scaffolding, two features taken over from FQ Card Engine and one written here, all three off by default
+        - Host of the FQ Card Engine combat features that belong to dnd5e rather than to Final Quest, extracted one at a time so they can be used without the card system
+        - Manifest: dnd5e 6.x, Foundry 14, no module dependency, socket disabled - each extraction adds what it needs
+        - Loading chain src/init-enhanced-combat.js (window.FqEnhancedCombatModule facade and CONFIG.FqEnhancedCombat namespace), then the init and setup hooks
+        - "Debug logs" setting, translated into English and French
+        - Toolchain taken from FQ Card Engine: ESLint (same rules), Vitest, and a GitHub CI (lint + tests, release on tag)
+        - Version following FQ Card Engine and FQ Restrain Movement: the three modules are published together
